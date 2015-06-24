@@ -251,7 +251,7 @@ function creer_video_youtube()
 	var h = document.getElementById("youtube_hauteur").value;
 
 	//Transformation de la vidéo
-	var adresse = adresse.replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/");
+	var adresse = adresse.replace("watch?v=", "embed/");
 	
 	var iframe = document.createElement("iframe");
 	iframe.src = adresse;
@@ -288,6 +288,7 @@ function creer_video()
 	var video = document.createElement("video");
   	var file    = document.querySelector('input[type=file]').files[0];
   	var reader  = new FileReader();
+	video.controls = "controls";
 
 	reader.onloadend = function () {
 		video.src = reader.result;
@@ -332,7 +333,7 @@ function creer_tuto()
 {
 	var p = document.createElement("p");
 	p.style.display = "inline-block";
-	p.innerHTML = "Bienvenue !<br/>Appuie sur la touche 'a' de ton clavier pour passer au mode rendu et rappuie dessus pour revenir au mode édition.";
+	p.innerHTML = "<div style=\"text-align: center\">Bienvenue !<br/>Appuie sur la touche 'Echap' de ton clavier pour alterner entre le mode rendu et le mode édition.<br/>Déplace les coins pour modifier ton image.<br/>Enjoy ! ;)</div>";
 
 	return p;
 }
@@ -517,7 +518,7 @@ document.onkeyup = function(_event_) {
 	var winObj = checkEventObj(_event_);
 	var touche = winObj.keyCode;
 
-	if(touche == 65)
+	if(touche == 27)
 	{
 		if(mode_rendu)
 		{

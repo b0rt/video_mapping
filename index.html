@@ -15,17 +15,17 @@
 	</div>
 	
 	<button class="edit" id="ajouter_box">Ajouter</button>
-	<button class="edit" id="supprimer_box">Supprimer</button>
+	<button class="edit modif" id="supprimer_box">Supprimer</button>
 	<button class="edit modif" id="ajouter_site">Afficher un site</button>
 	<button class="edit modif" id="ajouter_image">Afficher une image</button>
-	<button class="edit modif" id="ajouter_video">Afficher une vidéo</button>
+	<!-- <button class="edit modif" id="ajouter_video">Afficher une vidéo</button> -->
 	<button class="edit modif" id="ajouter_youtube">Afficher une vidéo youtube</button>
 	<button class="edit modif" id="ajouter_texte">Afficher du texte</button>
 	<button class="edit modif" id="ajouter_zone_texte" onclick="modifier_box(4);return false;">Afficher une zone de texte</button>
 	
 	<div class="fenetre_popup" id="site_popup">
 		<form id="site_form" onsubmit="modifier_box(1);return false;">
-			<label>Adresse du site</label>
+			<label>Adresse du site (url)</label>
 			<br/>
 			<input value="http://www.alsacreations.com/" required="required" placeholder="www.monsite.com" id="site_adresse" type="text">
 			<br/>
@@ -72,7 +72,7 @@
 	
 	<div class="fenetre_popup" id="youtube_popup">
 		<form id="youtube_form" onsubmit="modifier_box(6);return false;">
-			<label>Adresse du site</label>
+			<label>Adresse de la vidéo youtube(url)</label>
 			<br/>
 			<input required="required" id="youtube_adresse" type="text">
 			<br/>
