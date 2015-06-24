@@ -401,6 +401,7 @@ function Mode_rendu()
 
 	cacher_corners();
 
+	document.body.style.backgroundColor = "#000";
 	document.getElementById("mode_rendu").style.display = "none";
 	document.getElementById("mode_edit").style.display = "inline";
 	mode_rendu = true;
@@ -417,6 +418,7 @@ function Mode_edit()
 		elements[x].style.display = "inline";
 	}
 
+	document.body.style.backgroundColor = "#FFF";
 	document.getElementById("mode_rendu").style.display = "inline";
 	document.getElementById("mode_edit").style.display = "none";
 
