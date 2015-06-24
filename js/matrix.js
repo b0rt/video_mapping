@@ -252,7 +252,6 @@ function creer_image()
 
 	reader.onloadend = function () {
 		img.src = reader.result;
-  		definir_corners();
   		update();
 	}
 
