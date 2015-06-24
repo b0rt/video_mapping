@@ -288,6 +288,15 @@ function creer_zone_texte()
 	return textarea;
 }
 
+function creer_tuto()
+{
+	var p = document.createElement("p");
+	p.style.display = "inline-block";
+	p.innerHTML = "Bienvenue !<br/>Appuie sur la touche 'a' de ton clavier pour passer au mode rendu et rappuie dessus pour revenir au mode édition.";
+
+	return p;
+}
+
 function ajouter_box()
 {
 	var boxs = document.querySelectorAll(".box");
@@ -325,6 +334,11 @@ function modifier_box(type)
 			content = creer_zone_texte();
 			break;
 
+		case 5:
+			content = creer_tuto();
+			break;
+
+
 		default:
 			content = creer_zone_texte();
 			break;
@@ -359,9 +373,9 @@ function select_box(id)
 	if(mode_rendu == false && (box == null || box.id != id))
 	{
 		box = document.getElementById(id);
-		//recuperer_corners();
 		afficher_corners();
 		update();
+		updateMenu();
 	}
 }
 
@@ -402,8 +416,6 @@ function Mode_rendu()
 	cacher_corners();
 
 	document.body.style.backgroundColor = "#000";
-	document.getElementById("mode_rendu").style.display = "none";
-	document.getElementById("mode_edit").style.display = "inline";
 	mode_rendu = true;
 	box = null;
 }
@@ -419,8 +431,6 @@ function Mode_edit()
 	}
 
 	document.body.style.backgroundColor = "#FFF";
-	document.getElementById("mode_rendu").style.display = "inline";
-	document.getElementById("mode_edit").style.display = "none";
 
 	if(box) afficher_corners();
 	updateMenu();
@@ -428,6 +438,9 @@ function Mode_edit()
 }
 Mode_edit();
 
+window.addEventListener("load", function() {creer_box();
+											modifier_box(5);
+										});
 document.getElementById("ajouter_box").addEventListener("click", creer_box, false);
 document.getElementById("supprimer_box").addEventListener("click", supprimer_box, false);
 document.getElementById("ajouter_site").addEventListener("click", function() {afficher_popup("site");}, false);
@@ -438,6 +451,28 @@ document.getElementById("site_fermer").addEventListener("click", cacher_popup, f
 document.getElementById("image_fermer").addEventListener("click", cacher_popup, false);
 document.getElementById("texte_fermer").addEventListener("click", cacher_popup, false);
 
-document.getElementById("mode_rendu").addEventListener("click", Mode_rendu, false);
-document.getElementById("mode_edit").addEventListener("click", Mode_edit, false);
+function checkEventObj ( _event_ ){
+	// --- IE explorer
+	if ( window.event )
+		return window.event;
+	// --- Netscape and other explorers
+	else
+		return _event_;
+}
 
+document.onkeyup = function(_event_) {
+	var winObj = checkEventObj(_event_);
+	var touche = winObj.keyCode;
+
+	if(touche == 65)
+	{
+		if(mode_rendu)
+		{
+			Mode_edit();
+		}
+		else
+		{
+			Mode_rendu();
+		}
+	}
+}
