@@ -244,6 +244,23 @@ function creer_site()
 	return iframe;
 }
 
+function creer_video_youtube()
+{
+	var adresse = document.getElementById("youtube_adresse").value;
+	var w = document.getElementById("youtube_largeur").value;
+	var h = document.getElementById("youtube_hauteur").value;
+
+	//Transformation de la vidéo
+	var adresse = adresse.replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/");
+	
+	var iframe = document.createElement("iframe");
+	iframe.src = adresse;
+	iframe.width = w;
+	iframe.height = h;
+	
+	return iframe;
+}
+
 function creer_image()
 {
 	var img = document.createElement("img");
@@ -265,6 +282,29 @@ function creer_image()
 	
 	return img;
 }
+
+function creer_video()
+{
+	var video = document.createElement("video");
+  	var file    = document.querySelector('input[type=file]').files[0];
+  	var reader  = new FileReader();
+
+	reader.onloadend = function () {
+		video.src = reader.result;
+  		definir_corners();
+  		update();
+	}
+
+	if (file) {
+	  reader.readAsDataURL(file);
+	} else {
+		video.src = "";
+	 	alert("Erreur lors du chargement de l'image");
+	}
+	
+	return video;
+}
+
 
 function creer_texte()
 {
@@ -336,6 +376,14 @@ function modifier_box(type)
 
 		case 5:
 			content = creer_tuto();
+			break;
+
+		case 6:
+			content = creer_video_youtube();
+			break;
+
+		case 7:
+			content = creer_video();
 			break;
 
 
@@ -441,15 +489,20 @@ Mode_edit();
 window.addEventListener("load", function() {creer_box();
 											modifier_box(5);
 										});
+
 document.getElementById("ajouter_box").addEventListener("click", creer_box, false);
 document.getElementById("supprimer_box").addEventListener("click", supprimer_box, false);
 document.getElementById("ajouter_site").addEventListener("click", function() {afficher_popup("site");}, false);
 document.getElementById("ajouter_image").addEventListener("click", function() {afficher_popup("image");}, false);
 document.getElementById("ajouter_texte").addEventListener("click", function() {afficher_popup("texte");}, false);
+document.getElementById("ajouter_youtube").addEventListener("click", function() {afficher_popup("youtube");}, false);
+document.getElementById("ajouter_video").addEventListener("click", function() {afficher_popup("video");}, false);
 
 document.getElementById("site_fermer").addEventListener("click", cacher_popup, false);
 document.getElementById("image_fermer").addEventListener("click", cacher_popup, false);
 document.getElementById("texte_fermer").addEventListener("click", cacher_popup, false);
+document.getElementById("youtube_fermer").addEventListener("click", cacher_popup, false);
+document.getElementById("video_fermer").addEventListener("click", cacher_popup, false);
 
 function checkEventObj ( _event_ ){
 	// --- IE explorer
