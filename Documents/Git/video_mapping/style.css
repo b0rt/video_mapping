@@ -4,6 +4,7 @@
   height: 100%;
   overflow: clip;
 }
+
 .box {
   position: absolute;
   top: 0px;
@@ -12,10 +13,6 @@
   -webkit-transform-origin: 0 0;
   -moz-transform-origin: 0 0;
   -o-transform-origin: 0 0;
-}
-
-body {
-	background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/5f/Blender-mesh-cube.png);
 }
 
 .corner {
@@ -72,6 +69,7 @@ input {
 }
 
 p {
+	color: grey;
 	font-size: 1.3em;
 }
 

@@ -4,6 +4,7 @@
 
 var box = null;
 var mode_rendu = false;
+var edit = false;
 corners_tab = new Array();
 
 /*
@@ -203,6 +204,7 @@ function cacher_popup()
 	{
 		popups[x].style.display = "none";
 	}
+	edit = false;
 }
 
 function vider_box()
@@ -228,6 +230,7 @@ function afficher_popup(txt)
 {
 	cacher_popup();
 	document.getElementById(txt + "_popup").style.display = "block";
+	edit = true;
 }
 
 function creer_site()
@@ -235,6 +238,23 @@ function creer_site()
 	var adresse = document.getElementById("site_adresse").value;
 	var w = document.getElementById("site_largeur").value;
 	var h = document.getElementById("site_hauteur").value;
+	
+	var iframe = document.createElement("iframe");
+	iframe.src = adresse;
+	iframe.width = w;
+	iframe.height = h;
+	
+	return iframe;
+}
+
+function creer_video_youtube()
+{
+	var adresse = document.getElementById("youtube_adresse").value;
+	var w = document.getElementById("youtube_largeur").value;
+	var h = document.getElementById("youtube_hauteur").value;
+
+	//Transformation de la vidéo
+	var adresse = adresse.replace("watch?v=", "embed/");
 	
 	var iframe = document.createElement("iframe");
 	iframe.src = adresse;
@@ -266,6 +286,30 @@ function creer_image()
 	return img;
 }
 
+function creer_video()
+{
+	var video = document.createElement("video");
+  	var file    = document.querySelector('input[type=file]').files[0];
+  	var reader  = new FileReader();
+	video.controls = "controls";
+
+	reader.onloadend = function () {
+		video.src = reader.result;
+  		definir_corners();
+  		update();
+	}
+
+	if (file) {
+	  reader.readAsDataURL(file);
+	} else {
+		video.src = "";
+	 	alert("Erreur lors du chargement de l'image");
+	}
+	
+	return video;
+}
+
+
 function creer_texte()
 {
 	var contenu = document.getElementById("texte").value;
@@ -286,6 +330,28 @@ function creer_zone_texte()
 	textarea.id = "textarea";
 	
 	return textarea;
+}
+
+function creer_tuto()
+{
+	var p = document.createElement("p");
+	p.style.display = "inline-block";
+	p.innerHTML = "<div style=\"text-align: center\">" + 
+		"Bienvenue !<br/>" +
+		"Raccourcis claviers :<br/>" +
+		"'Echap' => Permet d'alterner entre le mode rendu et le mode édition.<br/>" +
+		"  'A'   => Ajouter<br/>" +
+		"'Suppr' => Supprimer<br/>" +
+		"  'S'   => Afficher un site<br/>" +
+		"  'I'   => Afficher une image<br/>" +
+		"  'T'   => Afficher du texte<br/>" +
+		"  'Z'   => Afficher une zone de texte<br/>" +
+		"  'Y'   => Afficher une vidéo youtube<br/>" +
+		"Déplace les coins pour modifier ton image.<br/>" +
+		"Enjoy ! ;)" +
+		"</div>";
+
+	return p;
 }
 
 function ajouter_box()
@@ -325,6 +391,19 @@ function modifier_box(type)
 			content = creer_zone_texte();
 			break;
 
+		case 5:
+			content = creer_tuto();
+			break;
+
+		case 6:
+			content = creer_video_youtube();
+			break;
+
+		case 7:
+			content = creer_video();
+			break;
+
+
 		default:
 			content = creer_zone_texte();
 			break;
@@ -333,6 +412,7 @@ function modifier_box(type)
 	box.appendChild(content);
 	afficher_box();
 	cacher_popup();
+	edit = false;
 	return false;
 }
 
@@ -359,9 +439,9 @@ function select_box(id)
 	if(mode_rendu == false && (box == null || box.id != id))
 	{
 		box = document.getElementById(id);
-		//recuperer_corners();
 		afficher_corners();
 		update();
+		updateMenu();
 	}
 }
 
@@ -401,8 +481,7 @@ function Mode_rendu()
 
 	cacher_corners();
 
-	document.getElementById("mode_rendu").style.display = "none";
-	document.getElementById("mode_edit").style.display = "inline";
+	document.body.style.backgroundColor = "#000";
 	mode_rendu = true;
 	box = null;
 }
@@ -417,8 +496,7 @@ function Mode_edit()
 		elements[x].style.display = "inline";
 	}
 
-	document.getElementById("mode_rendu").style.display = "inline";
-	document.getElementById("mode_edit").style.display = "none";
+	document.body.style.backgroundColor = "#FFF";
 
 	if(box) afficher_corners();
 	updateMenu();
@@ -426,16 +504,115 @@ function Mode_edit()
 }
 Mode_edit();
 
+window.addEventListener("load", function() {creer_box();
+											modifier_box(5);
+										});
+
 document.getElementById("ajouter_box").addEventListener("click", creer_box, false);
 document.getElementById("supprimer_box").addEventListener("click", supprimer_box, false);
 document.getElementById("ajouter_site").addEventListener("click", function() {afficher_popup("site");}, false);
 document.getElementById("ajouter_image").addEventListener("click", function() {afficher_popup("image");}, false);
 document.getElementById("ajouter_texte").addEventListener("click", function() {afficher_popup("texte");}, false);
+document.getElementById("ajouter_youtube").addEventListener("click", function() {afficher_popup("youtube");}, false);
+//document.getElementById("ajouter_video").addEventListener("click", function() {afficher_popup("video");}, false);
 
 document.getElementById("site_fermer").addEventListener("click", cacher_popup, false);
 document.getElementById("image_fermer").addEventListener("click", cacher_popup, false);
 document.getElementById("texte_fermer").addEventListener("click", cacher_popup, false);
+document.getElementById("youtube_fermer").addEventListener("click", cacher_popup, false);
+document.getElementById("video_fermer").addEventListener("click", cacher_popup, false);
 
-document.getElementById("mode_rendu").addEventListener("click", Mode_rendu, false);
-document.getElementById("mode_edit").addEventListener("click", Mode_edit, false);
+function checkEventObj ( _event_ ){
+	// --- IE explorer
+	if ( window.event )
+		return window.event;
+	// --- Netscape and other explorers
+	else
+		return _event_;
+}
 
+document.onkeyup = function(_event_) {
+	var winObj = checkEventObj(_event_);
+	var touche = winObj.keyCode;
+
+	//Mode rendu/édition
+	if(touche == 27)
+	{
+		if(mode_rendu)
+		{
+			Mode_edit();
+		}
+		else if(edit == false)
+		{
+			Mode_rendu();
+		}
+	}
+
+	//Supprimer
+	if(touche == 46)
+	{
+		if(box != null && edit == false)
+		{
+			supprimer_box();
+		}
+	}
+
+	//Ajouter
+	if(touche == 65)
+	{
+		if(edit == false)
+		{
+			creer_box();
+		}
+	}
+
+	//Afficher site
+	if(touche == 83)
+	{
+		if(!box) creer_box(); 
+		if(box != null && edit == false)
+		{
+			afficher_popup("site");
+		}
+	}
+
+	//Afficher image
+	if(touche == 73)
+	{
+		if(!box) creer_box(); 
+		if(box != null && edit == false)
+		{
+			afficher_popup("image");
+		}
+	}
+
+	//Afficher youtube
+	if(touche == 89)
+	{
+		if(!box) creer_box(); 
+		if(box != null && edit == false)
+		{
+			afficher_popup("youtube");
+		}
+	}
+
+	//Afficher texte
+	if(touche == 84)
+	{
+		if(!box) creer_box(); 
+		if(box != null && edit == false)
+		{
+			afficher_popup("texte");
+		}
+	}
+
+	//Afficher zone de texte
+	if(touche == 90)
+	{
+		if(!box) creer_box(); 
+		if(box != null && edit == false)
+		{
+			modifier_box(4);
+		}
+	}
+}
