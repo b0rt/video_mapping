@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Stage - CSS et Javascript</title>
+	<link rel="stylesheet" href="style.css"/>
+	<meta charset="utf-8"/>
+</head>
+
+<body>
+	<div id="container" class="container">
+		<div id="marker0" class="corner"></div>
+		<div id="marker2" class="corner"></div>
+		<div id="marker4" class="corner"></div>
+		<div id="marker6" class="corner"></div>
+	</div>
+	
+	<button class="edit" id="ajouter_box">Ajouter</button>
+	<button class="edit modif" id="supprimer_box">Supprimer</button>
+	<button class="edit modif" id="ajouter_site">Afficher un site</button>
+	<button class="edit modif" id="ajouter_image">Afficher une image</button>
+	<!-- <button class="edit modif" id="ajouter_video">Afficher une vidéo</button> -->
+	<button class="edit modif" id="ajouter_youtube">Afficher une vidéo youtube</button>
+	<button class="edit modif" id="ajouter_texte">Afficher du texte</button>
+	<button class="edit modif" id="ajouter_zone_texte" onclick="modifier_box(4);return false;">Afficher une zone de texte</button>
+	
+	<div class="fenetre_popup" id="site_popup">
+		<form id="site_form" onsubmit="modifier_box(1);return false;">
+			<label>Adresse du site (url)</label>
+			<br/>
+			<input value="http://www.alsacreations.com/" required="required" placeholder="www.monsite.com" id="site_adresse" type="text">
+			<br/>
+			<label>Largeur :</label>
+			<input required="required" id="site_largeur" type="number" value="500">
+			<label>Hauteur :</label>
+			<input required="required" id="site_hauteur" type="number" value="500">
+			<br>
+			<input value="Afficher !" type="submit">
+		</form>
+		<button id="site_fermer">Fermer cette fenêtre</button>
+	</div>
+
+	<div class="fenetre_popup" id="image_popup">
+		<form id="image_form">
+			<label>Charger votre image</label>
+			<br/>
+			<input type="file" onchange="modifier_box(2);return false;">
+		</form>
+		<button id="image_fermer">Fermer cette fenêtre</button>
+	</div>
+
+	<div class="fenetre_popup" id="video_popup">
+		<form id="video_form">
+			<label>Charger votre image</label>
+			<br/>
+			<input type="file" onchange="modifier_box(7);return false;">
+		</form>
+		<button id="video_fermer">Fermer cette fenêtre</button>
+	</div>
+	
+	
+	<div class="fenetre_popup" id="texte_popup">
+		<form id="texte_form" onsubmit="modifier_box(3);return false;">
+			<label>Texte à afficher (les balises html fonctionnent)</label>
+			<br/>
+			<textarea required="required" id="texte" placeholder="Ecrivez votre texte ici !"></textarea>
+			<br/>
+			
+			<input value="Afficher !" type="submit" >
+		</form>
+		<button id="texte_fermer">Fermer cette fenêtre</button>
+	</div>
+	
+	<div class="fenetre_popup" id="youtube_popup">
+		<form id="youtube_form" onsubmit="modifier_box(6);return false;">
+			<label>Adresse de la vidéo youtube(url)</label>
+			<br/>
+			<input required="required" id="youtube_adresse" type="text">
+			<br/>
+			<label>Largeur :</label>
+			<input required="required" id="youtube_largeur" type="number" value="500">
+			<label>Hauteur :</label>
+			<input required="required" id="youtube_hauteur" type="number" value="500">
+			<br>
+			<input value="Afficher !" type="submit">
+		</form>
+		<button id="youtube_fermer">Fermer cette fenêtre</button>
+	</div>
+	
+	<script src="js/matrix.js"></script>
+</body>
+</html>
