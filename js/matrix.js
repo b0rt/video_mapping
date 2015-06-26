@@ -548,71 +548,74 @@ document.onkeyup = function(_event_) {
 		}
 	}
 
-	//Supprimer
-	if(touche == 46)
+	if(!mode_rendu)
 	{
-		if(box != null && edit == false)
+		//Supprimer
+		if(touche == 46)
 		{
-			supprimer_box();
+			if(box != null && edit == false)
+			{
+				supprimer_box();
+			}
 		}
-	}
-
-	//Ajouter
-	if(touche == 65)
-	{
-		if(edit == false)
+	
+		//Ajouter
+		if(touche == 65)
 		{
-			creer_box();
+			if(edit == false)
+			{
+				creer_box();
+			}
 		}
-	}
-
-	//Afficher site
-	if(touche == 83)
-	{
-		if(!box) creer_box(); 
-		if(box != null && edit == false)
+	
+		//Afficher site
+		if(touche == 83)
 		{
-			afficher_popup("site");
+			if(!box) creer_box(); 
+			if(box != null && edit == false)
+			{
+				afficher_popup("site");
+			}
 		}
-	}
-
-	//Afficher image
-	if(touche == 73)
-	{
-		if(!box) creer_box(); 
-		if(box != null && edit == false)
+	
+		//Afficher image
+		if(touche == 73)
 		{
-			afficher_popup("image");
+			if(!box) creer_box(); 
+			if(box != null && edit == false)
+			{
+				afficher_popup("image");
+			}
 		}
-	}
-
-	//Afficher youtube
-	if(touche == 89)
-	{
-		if(!box) creer_box(); 
-		if(box != null && edit == false)
+	
+		//Afficher youtube
+		if(touche == 89)
 		{
-			afficher_popup("youtube");
+			if(!box) creer_box(); 
+			if(box != null && edit == false)
+			{
+				afficher_popup("youtube");
+			}
 		}
-	}
-
-	//Afficher texte
-	if(touche == 84)
-	{
-		if(!box) creer_box(); 
-		if(box != null && edit == false)
+	
+		//Afficher texte
+		if(touche == 84)
 		{
-			afficher_popup("texte");
+			if(!box) creer_box(); 
+			if(box != null && edit == false)
+			{
+				afficher_popup("texte");
+			}
 		}
-	}
-
-	//Afficher zone de texte
-	if(touche == 90)
-	{
-		if(!box) creer_box(); 
-		if(box != null && edit == false)
+	
+		//Afficher zone de texte
+		if(touche == 90)
 		{
-			modifier_box(4);
+			if(!box) creer_box(); 
+			if(box != null && edit == false)
+			{
+				modifier_box(4);
+			}
 		}
 	}
 }
