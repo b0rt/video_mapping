@@ -338,7 +338,7 @@ function creer_tuto()
 	p.style.display = "inline-block";
 	p.innerHTML = "<div style=\"text-align: center\">" + 
 		"Bienvenue !<br/>" +
-		"Raccourcis claviers :<br/>" +
+		"Raccourcis clavier :<br/>" +
 		"'Echap' => Permet d'alterner entre le mode rendu et le mode édition.<br/>" +
 		"  'A'   => Ajouter<br/>" +
 		"'Suppr' => Supprimer<br/>" +
